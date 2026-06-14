@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KERNEL — Creative Production</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: #ffffff;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* ========== NAVIGATION ========== */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            padding: 20px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10,10,10,0.85);
+            backdrop-filter: blur(6px);
+        }
+
+        nav .logo {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 40px;
+        }
+
+        nav ul li a {
+            color: #aaa;
+            text-decoration: none;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #fff;
+        }
+
+        /* ========== HERO ========== */
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* 
+        ================================================
+        МЕСТО ДЛЯ HERO-ФОТО:
+        Замените src на путь к вашему фото
+        ================================================
+        */
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.45) grayscale(100%);
+            
+            /* src задаётся через тег img ниже */
+        }
+
+        .hero img.hero-bg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.45) grayscale(100%);
+        }
+
+        /* Если нет фото — серый фон */
+        .hero-placeholder {
+            position: absolute;
+            inset: 0;
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            font-size: 13px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(52px, 10vw, 120px);
+            font-weight: 800;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+
+        .hero-content p {
+            font-size: clamp(11px, 1.5vw, 14px);
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: #ccc;
+            margin-top: 10px;
+        }
+
+        /* ========== ABOUT ========== */
+        .about {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 100vh;
+            background: #0a0a0a;
+        }
+
+        .about-text {
+            padding: 80px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .about-text .paragraphs p {
+            font-size: 15px;
+            line-height: 1.75;
+            color: #ddd;
+            margin-bottom: 28px;
+            max-width: 520px;
+        }
+
+        .about-text .brand {
+            margin-top: 60px;
+        }
+
+        .about-text .brand h2 {
+            font-size: clamp(48px, 6vw, 80px);
+            font-weight: 800;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+
+        .about-text .brand span {
+            font-size: 14px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #aaa;
+            display: block;
+            margin-top: 6px;
+        }
+
+        /* 
+        ================================================
+        МЕСТО ДЛЯ ФОТО В СЕКЦИИ ABOUT:
+        Замените src на путь к вашему фото
+        ================================================
+        */
+        .about-image {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%) brightness(0.75);
+        }
+
+        .about-image-placeholder {
+            width: 100%;
+            height: 100%;
+            min-height: 500px;
+            background: #1c1c1c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* ========== PACKAGES SECTION TITLE ========== */
+        .section-title {
+            padding: 80px 60px 20px;
+            border-bottom: 1px solid #222;
+        }
+
+        .section-title h2 {
+            font-size: 11px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #666;
+        }
+
+        /* ========== PACKAGE CARD ========== */
+        .package {
+            padding: 0 60px 80px;
+            border-bottom: 1px solid #1e1e1e;
+        }
+
+        .package-header {
+            padding: 40px 0 30px;
+            border-bottom: 1px solid #2a2a2a;
+            margin-bottom: 50px;
+        }
+
+        .package-header h3 {
+            font-size: clamp(28px, 4vw, 48px);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            line-height: 1.1;
+        }
+
+        .package-header h4 {
+            font-size: clamp(16px, 2vw, 22px);
+            font-weight: 400;
+            color: #aaa;
+            margin-top: 6px;
+            letter-spacing: 1px;
+        }
+
+        .package-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .package-left h5 {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            color: #fff;
+        }
+
+        .package-left p {
+            font-size: 14px;
+            line-height: 1.75;
+            color: #bbb;
+            text-align: justify;
+            max-width: 380px;
+            margin-bottom: 30px;
+        }
+
+        /* 
+        ================================================
+        МЕСТО ДЛЯ ФОТО СПЕЦИАЛИСТА В ПАКЕТЕ:
+        Замените src на путь к фото
+        ================================================
+        */
+        .package-photo {
+            width: 100%;
+            max-width: 340px;
+            aspect-ratio: 3/4;
+            overflow: hidden;
+        }
+
+        .package-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+        }
+
+        .package-photo-placeholder {
+            width: 100%;
+            max-width: 340px;
+            aspect-ratio: 3/4;
+            background: #1c1c1c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .package-right h5 {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            color: #fff;
+        }
+
+        .package-right ul {
+            list-style: none;
+            margin-bottom: 40px;
+        }
+
+        .package-right ul li {
+            font-size: 13px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #ccc;
+            padding: 14px 0;
+            border-bottom: 1px solid #1e1e1e;
+            line-height: 1.5;
+        }
+
+        .package-right ul li::before {
+            content: "/ ";
+            color: #fff;
+            font-weight: 700;
+        }
+
+        /* Список с буллетами */
+        .package-right ul.bullet-list li::before {
+            content: "• ";
+            color: #fff;
+        }
+
+        .price-btn {
+            display: inline-block;
+            padding: 16px 40px;
+            border: 1px solid #fff;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            background: transparent;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .price-btn:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        /* ========== PACKAGE TOTAL — Extended layout ========== */
+        .package-total-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+        }
+
+        .package-total-body .col-left p {
+            font-size: 14px;
+            line-height: 1.75;
+            color: #bbb;
+            margin-bottom: 20px;
+            max-width: 380px;
+        }
+
+        .package-total-body .col-right ul {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .package-total-body .col-right ul li {
+            padding: 12px 0;
+            border-bottom: 1px solid #1e1e1e;
+            font-size: 13px;
+            color: #ccc;
+            line-height: 1.5;
+        }
+
+        .package-total-body .col-right ul li strong {
+            display: block;
+            color: #fff;
+            font-style: italic;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        /* Pre-production block */
+        .pre-production {
+            padding: 60px 60px;
+            border-bottom: 1px solid #1e1e1e;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+        }
+
+        .pre-production h5 {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .pre-production p.sub {
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 24px;
+        }
+
+        .pre-production ul {
+            list-style: none;
+        }
+
+        .pre-production ul li {
+            font-size: 14px;
+            color: #bbb;
+            padding: 10px 0;
+            border-bottom: 1px solid #1e1e1e;
+            line-height: 1.5;
+        }
+
+        .pre-production ul li::before {
+            content: "• ";
+            color: #fff;
+        }
+
+        .additional h5 {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .additional p {
+            font-size: 14px;
+            color: #bbb;
+            padding: 10px 0;
+            border-bottom: 1px solid #1e1e1e;
+            line-height: 1.5;
+        }
+
+        .additional .physical {
+            margin-top: 30px;
+        }
+
+        .additional .physical p.label {
+            font-size: 13px;
+            font-style: italic;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #fff;
+            border-bottom: none;
+            margin-bottom: 6px;
+        }
+
+        .additional .physical p.sub-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #fff;
+            border-bottom: none;
+            margin-bottom: 12px;
+        }
+
+        .additional .physical p.items {
+            font-size: 14px;
+            color: #bbb;
+            border-bottom: none;
+            line-height: 1.9;
+        }
+
+        /* ========== CONTACT ========== */
+        .contact {
+            padding: 100px 60px;
+            text-align: center;
+            background: #080808;
+        }
+
+        .contact h2 {
+            font-size: clamp(32px, 5vw, 64px);
+            font-weight: 800;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .contact p {
+            font-size: 14px;
+            color: #888;
+            letter-spacing: 2px;
+            margin-bottom: 40px;
+        }
+
+        .contact a.btn {
+            display: inline-block;
+            padding: 18px 60px;
+            border: 1px solid #fff;
+            color: #fff;
+            text-decoration: none;
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+
+        .contact a.btn:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            padding: 30px 60px;
+            border-top: 1px solid #1a1a1a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        footer .logo {
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: 4px;
+        }
+
+        footer p {
+            font-size: 11px;
+            color: #444;
+            letter-spacing: 2px;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 900px) {
+            nav { padding: 16px 24px; }
+            nav ul { gap: 20px; }
+
+            .about { grid-template-columns: 1fr; }
+            .about-text { padding: 60px 24px; }
+            .about-image { min-height: 300px; }
+
+            .section-title { padding: 60px 24px 16px; }
+            .package { padding: 0 24px 60px; }
+
+            .package-body,
+            .package-total-body,
+            .pre-production {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .pre-production { padding: 40px 24px; }
+            .contact { padding: 80px 24px; }
+            footer { padding: 24px; flex-direction: column; gap: 10px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ========== NAVIGATION ========== -->
+<nav>
+    <div class="logo">KERNEL</div>
+    <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#packages">Packages</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
+
+
+<!-- ========== HERO ========== -->
+<section class="hero" id="hero">
+
+    <!--
+    ================================================
+    HERO ФОТО: замените путь на ваш файл
+    Например: src="images/hero.jpg"
+    ================================================
+    -->
+   <img class="hero-bg" src="первый экран.JPG" alt="KERNEL Creative Production">
+
+    <div class="hero-content">
+        <!--
+        ================================================
+        HERO ТЕКСТ: можно изменить
+        ================================================
+        -->
+        <h1>KERNEL</h1>
+        <p>Creative Production</p>
+    </div>
+</section>
+
+
+<!-- ========== ABOUT ========== -->
+<section class="about" id="about">
+    <div class="about-text">
+        <div class="paragraphs">
+            <!--
+            ================================================
+            ТЕКСТ О КОМПАНИИ: замените на ваш
+            ================================================
+            -->
+            <p>
+                KERNEL — creative production studio, работающая на пересечении fashion, визуального искусства, брендинга и full-cycle production.
+            </p>
+            <p>
+                Мы создаем визуальные миры для брендов, артистов, проектов и людей — от идеи и художественного направления до финальной реализации, съемки и физического производства.
+            </p>
+            <p>
+                KERNEL — это команда специалистов с опытом в fashion-индустрии, creative production, брендинге, стилизации, дизайне и визуальном storytelling. Мы объединяем эстетику, структуру и production-подход, создавая проекты под ключ — без необходимости собирать десятки подрядчиков.
+            </p>
+        </div>
+        <div class="brand">
+            <h2>KERNEL</h2>
+            <span>Creative Production</span>
+        </div>
+    </div>
+
+    <div class="about-image">
+        <!--
+        ================================================
+        ФОТО ДЛЯ СЕКЦИИ ABOUT: замените путь
+        Например: src="images/about.jpg"
+        ================================================
+        -->
+       <div class="about-image">
+    <img src="второй экран.JPG" alt="KERNEL Studio">
+</div>
+        <!-- <img src="YOUR_ABOUT_IMAGE.jpg" alt="KERNEL Studio"> -->
+    </div>
+</section>
+
+
+<!-- ========== PACKAGES ========== -->
+<div class="section-title" id="packages">
+    
+</div>
+
+
+<!-- ====== PACKAGE 01 ====== -->
+<section class="package">
+    <div class="package-header">
+        <!--
+        ================================================
+        НАЗВАНИЕ ПАКЕТА: можно изменить
+        ================================================
+        -->
+        <h3>PACKAGE.01</h3>
+        <h4>Creative Consultation</h4>
+    </div>
+
+    <div class="package-body">
+        <div class="package-left">
+            <!--
+            ================================================
+            ТЕКСТ И ФОТО СПЕЦИАЛИСТА — PACKAGE 01
+            ================================================
+            -->
+            <h5>Консультация с Creative Director</h5>
+            <p>
+                Индивидуальная creative-консультация для брендов, бизнесов, проектов и людей, которым необходимо сильное визуальное направление, свежие идеи и профессиональный взгляд на развитие продукта, эстетики и позиционирования.
+            </p>
+
+            <div class="package-photo">
+    <img src="Вика.JPG" alt="Creative Director">
+</div>
+        </div>
+
+        <div class="package-right">
+            <h5>Что вы получаете</h5>
+            <ul>
+                <!--
+                ================================================
+                СПИСОК УСЛУГ: можно редактировать
+                ================================================
+                -->
+                <li>Персональную консультацию</li>
+                <li>Creative-анализ проекта или идеи</li>
+                <li>Профессиональный взгляд со стороны Fashion и Visual Industry</li>
+                <li>Рекомендации по развитию и позиционированию</li>
+                <li>Идеи для визуала и контента</li>
+                <li>Направления для дальнейшей реализации</li>
+                <li>Понимание структуры проекта и его потенциала</li>
+            </ul>
+            <!-- ЦЕНА: замените на актуальную -->
+            <a href="#contact" class="price-btn">100 000 RUB</a>
+        </div>
+    </div>
+</section>
+
+
+<!-- ====== PACKAGE 02 ====== -->
+<section class="package">
+    <div class="package-header">
+        <h3>PACKAGE.02</h3>
+        <h4>ART Photography Consultation</h4>
+    </div>
+
+    <div class="package-body">
+        <div class="package-left">
+            <h5>Консультация с ART Photographer</h5>
+            <p>
+                Индивидуальная консультация для фотографов, creators, брендов и creative-проектов, которым важно научиться создавать не просто красивые кадры, а художественные визуальные истории с атмосферой, смыслом и собственной эстетикой.
+            </p>
+
+           <div class="package-photo">
+    <img src="Кирилл.JPG" alt="ART Photographer">
+</div>
+        </div>
+
+        <div class="package-right">
+            <h5>Что вы получаете</h5>
+            <ul>
+                <li>Помощь в поиске и развитии собственного художественного стиля</li>
+                <li>Профессиональный взгляд на ваши работы, идеи и creative-направление</li>
+                <li>Разработку уникальных концепций для ART съемок и visual-проектов</li>
+                <li>Рекомендации по созданию Cinematic и Editorial Aesthetics</li>
+                <li>Развитие creative-мышления и художественного взгляда на фотографию как artist</li>
+                <li>Понимание того, как создавать кадры, которые выглядят как сцены из фильма, арт-проекта или visual-story</li>
+            </ul>
+            <a href="#contact" class="price-btn">50 000 RUB</a>
+        </div>
+    </div>
+</section>
+
+
+<!-- ====== PACKAGE TOTAL.325 ====== -->
+<section class="package">
+    <div class="package-header">
+        <h3>PACKAGE TOTAL.325</h3>
+        <h4>5-hour Full Creative Production</h4>
+    </div>
+
+    <div class="package-total-body">
+        <div class="col-left">
+            <!--
+            ================================================
+            ТЕКСТ TOTAL ПАКЕТА
+            ================================================
+            -->
+            <p>
+                TOTAL — это комплексный 5-часовой пакет, включающий работу всей команды KERNEL над вашим проектом.
+            </p>
+            <p>
+                Мы берем на себя полный цикл подготовки, художественного направления и реализации съемки, создавая цельный визуальный продукт для брендов, бизнеса, артистов и creative-проектов.
+            </p>
+            <a href="#contact" class="price-btn" style="margin-top:20px; display:inline-block;">325 000 RUB</a>
+        </div>
+
+        <div class="col-right">
+            <h5 style="font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;">Команда:</h5>
+            <ul>
+                <li>
+                    <strong>Creative Direction &amp; Styling</strong>
+                    Разработка концепции, стилизация и художественное направление проекта
+                </li>
+                <li>
+                    <strong>Production Management</strong>
+                    Организация и координация всех процессов съемочного дня
+                </li>
+                <li>
+                    <strong>Photography</strong>
+                    На выходе: 25 фотографий с профессиональной ретушью
+                </li>
+                <li>
+                    <strong>Motion &amp; Reels Production</strong>
+                    На выходе: 6 готовых reels
+                </li>
+                <li>
+                    <strong>Graphic &amp; Visual Support</strong>
+                    Поддержка визуальной части проекта и графических решений
+                </li>
+                <li>
+                    <strong>Makeup &amp; Hair Styling</strong>
+                    Создание образов и beauty-стилизация
+                </li>
+                <li>
+                    <strong>Set Design &amp; Organic Decor</strong>
+                    Оформление пространства, работа с декором, растениями и природными материалами*
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+
+<!-- ====== PRE-PRODUCTION ====== -->
+<div class="pre-production">
+    <div class="col-pre">
+        <h5>Pre-Production</h5>
+        <p class="sub">Перед съемкой команда KERNEL проводит полную подготовку проекта</p>
+        <ul>
+            <li>Разработка moodboards</li>
+            <li>Визуальная концепция</li>
+            <li>Подготовка съемочного плана</li>
+            <li>Составление таблиц и смет</li>
+            <li>Помощь в организации процесса</li>
+            <li>Подбор моделей и проведение кастинга</li>
+            <li>Помощь в выборе локации</li>
+            <li>Поиск пространства под концепцию</li>
+            <li>Оформление пространства и декора</li>
+        </ul>
+    </div>
+
+    <div class="additional">
+        <h5>Дополнительно:</h5>
+        <p>Оплата моделей производится отдельно</p>
+        <p>Стоимость аренды локации оплачивается отдельно</p>
+        <p>*Стоимость декора и материалов рассчитывается отдельно в зависимости от проекта</p>
+
+        <div class="physical">
+            <p class="label">Physical Production &amp; Merch <span style="font-style:normal;font-size:12px;color:#888;">( стоимость по запросу )</span></p>
+            <p class="sub-label">При необходимости команда KERNEL также помогает с:</p>
+            <p class="items">
+                Разработкой мерча<br>
+                Упаковкой<br>
+                Брендированной бумажной продукцией<br>
+                Печатными материалами<br>
+                Gift production<br>
+                Physical branding
+            </p>
+        </div>
+    </div>
+</div>
+<!-- ========== СТИЛИ ДЛЯ TEAM ========== -->
+<style>
+    .team {
+        padding: 60px 60px 80px;
+        background: #0a0a0a;
+    }
+
+    .team-label {
+        display: inline-block;
+        border: 1px solid #555;
+        border-radius: 14px;
+        padding: 12px 32px;
+        font-size: 15px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: #fff;
+        margin-bottom: 50px;
+    }
+
+    /* Первый ряд — 5 колонок */
+    .team-row-5 {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+
+    /* Второй ряд — 4 колонки, выровненные по левому краю */
+    .team-row-4 {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 20px;
+    }
+
+    .team-member {
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Фото — прямоугольное, соотношение 3:4 */
+    .team-member-photo {
+        width: 100%;
+        aspect-ratio: 3 / 4;
+        overflow: hidden;
+        background: #111;
+        margin-bottom: 12px;
+    }
+
+    .team-member-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top center;
+        filter: grayscale(100%);
+        display: block;
+        transition: transform 1.2s cubic-bezier(.19,1,.22,1);
+    }
+
+    .team-member:hover .team-member-photo img {
+        transform: scale(1.04);
+    }
+
+    /* Роль — крупнее, жирная */
+    .team-member-role {
+        font-size: 14px;
+        font-weight: 700;
+        color: #fff;
+        line-height: 1.3;
+        margin-bottom: 3px;
+        letter-spacing: 0;
+    }
+
+    /* Имя — мельче, серое */
+    .team-member-name {
+        font-size: 13px;
+        color: #777;
+        letter-spacing: 0;
+        font-weight: 400;
+    }
+
+    /* Адаптив */
+    @media (max-width: 1100px) {
+        .team-row-5,
+        .team-row-4 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    @media (max-width: 700px) {
+        .team { padding: 40px 24px 60px; }
+        .team-row-5,
+        .team-row-4 {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+    }
+</style>
+
+<!-- ========== OUR TEAM ========== -->
+<section class="team" id="team">
+
+    <div class="team-label">OUR TEAM</div>
+
+    <!-- РЯД 1 — 5 человек -->
+    <div class="team-row-5">
+
+        <!-- ✏️ Замените team_01.jpg на имя вашего файла -->
+        <div class="team-member">
+            <div class="team-member-photo">
+                <img src="Вика.JPG" alt="Viktoriya Desyatnikova">
+            </div>
+            <div class="team-member-role">Creative Director</div>
+            <div class="team-member-name">Viktoriya Desyatnikova</div>
+        </div>
+
+        <!-- ✏️ Замените team_02.jpg на имя вашего файла -->
+        <div class="team-member">
+            <div class="team-member-photo">
+                <img src="Кирилл.JPG" alt="Kirill Sakrukin">
+            </div>
+            <div class="team-member-role">Art Photographer</div>
+            <div class="team-member-name">Kirill Sakrukin</div>
+        </div>
+
+        <!-- ✏️ Замените team_03.jpg на имя вашего файла -->
+        <div class="team-member">
+            <div class="team-member-photo">
+                <img src="павел.JPG" alt="Pavel Vetrov">
+            </div>
+            <div class="team-member-role">Motion &amp; Reels Producer</div>
+            <div class="team-member-name">Pavel Vetrov</div>
+        </div>
+
+        <!-- ✏️ Замените team_04.jpg на имя вашего файла -->
+        <div class="team-member">
+            <div class="team-member-photo">
+                <img src="анна.JPG" alt="Anna Kuzina">
+            </div>
+            <div class="team-member-role">Production Manager</div>
+            <div class="team-member-name">Anna Kuzina</div>
+        </div>
+
+        <!-- ✏️ Замените team_05.jpg на имя вашего файла -->
+        <div class="team-member">
+            <div class="team-member-photo">
+                <img src="викасенина.JPG" alt="Viktoriya Senina">
+            </div>
+            <div class="team-member-role">Graphic Designer</div>
+            <div class="team-member-name">Viktoriya Senina</div>
+        </div>
+
+    </div>
+
+    <!-- РЯД 2 — 4 человека -->
+    <div class="team-row-4">
+
+        <!-- ✏️ Замените team_06.jpg на имя вашего файла -->
+        <div class="team-member">
+            <div class="team-member-photo">
+                <img src="елена.JPG" alt="Elena Kuzmenko">
+            </div>
+            <div class="team-member-role">Makeup &amp; Hair Artist</div>
+            <div class="team-member-name">Elena Kuzmenko</div>
+        </div>
+
+        <!-- ✏️ Замените team_07.jpg на имя вашего файла -->
+        <div class="team-member">
+            <div class="team-member-photo">
+                <img src="гафер.JPG" alt="Gaffer">
+            </div>
+            <div class="team-member-role">Gaffer</div>
+            <div class="team-member-name"></div>
+        </div>
+
+        <!-- ✏️ Замените team_08.jpg на имя вашего файла -->
+        <div class="team-member">
+            <div class="team-member-photo">
+                <img src="сетдизайн.JPG" alt="Set Designer">
+            </div>
+            <div class="team-member-role">Set Designer</div>
+            <div class="team-member-name"></div>
+        </div>
+
+        <!-- ✏️ Замените team_09.jpg на имя вашего файла -->
+        <div class="team-member">
+            <div class="team-member-photo">
+                <img src="ассистент.JPG" alt="Assistant">
+            </div>
+            <div class="team-member-role">Assistant</div>
+            <div class="team-member-name"></div>
+        </div>
+
+        <!-- Пустая ячейка для сохранения сетки 5 колонок -->
+        <div class="team-member" style="visibility:hidden;"></div>
+
+    </div>
+
+</section>
+
+<!-- ========== CONTACT ========== -->
+<section class="contact" id="contact">
+    <!--
+    ================================================
+    КОНТАКТНАЯ ИНФОРМАЦИЯ: замените на вашу
+    ================================================
+    -->
+    <h2>Let's Work</h2>
+    <p>Свяжитесь с нами, чтобы обсудить ваш проект</p>
+    <!-- Замените ссылку на вашу почту или мессенджер -->
+    <a href="mailto:hello@kernel.studio" class="btn">hello@kernel.studio</a>
+</section>
+
+
+<!-- ========== FOOTER ========== -->
+<footer>
+    <div class="logo">KERNEL</div>
+    <p>© 2026 KERNEL Creative Production. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
